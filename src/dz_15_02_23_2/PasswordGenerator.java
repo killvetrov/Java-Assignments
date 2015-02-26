@@ -30,10 +30,10 @@ public class PasswordGenerator {
 	
 	private static String generateLow() {
 		String password = "";
-		// генерируем пароль только из цифр в одном случае из четырех
+		// РіРµРЅРµСЂРёСЂСѓРµРј РїР°СЂРѕР»СЊ С‚РѕР»СЊРєРѕ РёР· С†РёС„СЂ РІ РѕРґРЅРѕРј СЃР»СѓС‡Р°Рµ РёР· С‡РµС‚С‹СЂРµС…
 		boolean onlyDigits = rnd.nextBoolean() && rnd.nextBoolean();
-		// если пароль будет сотоять только из цифр, длину не ограничиваем - при любой длине он будет простым; 
-		// иначе нам нужно не превысить мин. длину среднего пароля
+		// РµСЃР»Рё РїР°СЂРѕР»СЊ Р±СѓРґРµС‚ СЃРѕС‚РѕСЏС‚СЊ С‚РѕР»СЊРєРѕ РёР· С†РёС„СЂ, РґР»РёРЅСѓ РЅРµ РѕРіСЂР°РЅРёС‡РёРІР°РµРј - РїСЂРё Р»СЋР±РѕР№ РґР»РёРЅРµ РѕРЅ Р±СѓРґРµС‚ РїСЂРѕСЃС‚С‹Рј; 
+		// РёРЅР°С‡Рµ РЅР°Рј РЅСѓР¶РЅРѕ РЅРµ РїСЂРµРІС‹СЃРёС‚СЊ РјРёРЅ. РґР»РёРЅСѓ СЃСЂРµРґРЅРµРіРѕ РїР°СЂРѕР»СЏ
 		int passLength = onlyDigits ? MIN_LENGTH + rnd.nextInt(MAX_LENGTH - MIN_LENGTH + 1) : 
 			MIN_LENGTH + rnd.nextInt(MEDIUM_MIN_LENGTH - MIN_LENGTH);
 		while (password.length() < passLength)
@@ -45,21 +45,21 @@ public class PasswordGenerator {
 		int passLength = MEDIUM_MIN_LENGTH + rnd.nextInt(MAX_LENGTH - MEDIUM_MIN_LENGTH + 1);
 		char[] passChars = new char[passLength];
 		
-		// в среднем пароле должен быть хотя бы один буквенный символ 
+		// РІ СЃСЂРµРґРЅРµРј РїР°СЂРѕР»Рµ РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ С…РѕС‚СЏ Р±С‹ РѕРґРёРЅ Р±СѓРєРІРµРЅРЅС‹Р№ СЃРёРјРІРѕР» 
 		passChars[rnd.nextInt(passChars.length)] = randomLoCaseChar();
 		
 		boolean oneDigit = false;
 		boolean noUpCase = false;		
 		if (passLength >= HARD_MIN_LENGTH) {
-			// длина пароля превышает минимальную длину сложного; чтобы сложность пароля осталась средней,  
-			// нам надо избежать появления либо двух цифр, либо знаков в верхнем регистре
+			// РґР»РёРЅР° РїР°СЂРѕР»СЏ РїСЂРµРІС‹С€Р°РµС‚ РјРёРЅРёРјР°Р»СЊРЅСѓСЋ РґР»РёРЅСѓ СЃР»РѕР¶РЅРѕРіРѕ; С‡С‚РѕР±С‹ СЃР»РѕР¶РЅРѕСЃС‚СЊ РїР°СЂРѕР»СЏ РѕСЃС‚Р°Р»Р°СЃСЊ СЃСЂРµРґРЅРµР№,  
+			// РЅР°Рј РЅР°РґРѕ РёР·Р±РµР¶Р°С‚СЊ РїРѕСЏРІР»РµРЅРёСЏ Р»РёР±Рѕ РґРІСѓС… С†РёС„СЂ, Р»РёР±Рѕ Р·РЅР°РєРѕРІ РІ РІРµСЂС…РЅРµРј СЂРµРіРёСЃС‚СЂРµ
 			oneDigit = !(noUpCase = rnd.nextBoolean());
 			if (oneDigit) {
-				// допускаем появление только одной цифры в пароле, так как в нем могут быть символы в верхнем регистре
+				// РґРѕРїСѓСЃРєР°РµРј РїРѕСЏРІР»РµРЅРёРµ С‚РѕР»СЊРєРѕ РѕРґРЅРѕР№ С†РёС„СЂС‹ РІ РїР°СЂРѕР»Рµ, С‚Р°Рє РєР°Рє РІ РЅРµРј РјРѕРіСѓС‚ Р±С‹С‚СЊ СЃРёРјРІРѕР»С‹ РІ РІРµСЂС…РЅРµРј СЂРµРіРёСЃС‚СЂРµ
 				int digitsToPlace = 1;
 				while (digitsToPlace > 0) {
 					int i = rnd.nextInt(passChars.length);
-					if (passChars[i] == 0) /* эта проверка необходима, чтобы не затереть ранее помещенный символ */ {
+					if (passChars[i] == 0) /* СЌС‚Р° РїСЂРѕРІРµСЂРєР° РЅРµРѕР±С…РѕРґРёРјР°, С‡С‚РѕР±С‹ РЅРµ Р·Р°С‚РµСЂРµС‚СЊ СЂР°РЅРµРµ РїРѕРјРµС‰РµРЅРЅС‹Р№ СЃРёРјРІРѕР» */ {
 						passChars[rnd.nextInt(passChars.length)] = rnd.nextBoolean() ? randomNumChar() : 0;
 						digitsToPlace--;
 					}
@@ -69,7 +69,7 @@ public class PasswordGenerator {
 			}
 		}
 		
-		// заполняем остальные позиции пароля в соответствии с критериями средней сложности
+		// Р·Р°РїРѕР»РЅСЏРµРј РѕСЃС‚Р°Р»СЊРЅС‹Рµ РїРѕР·РёС†РёРё РїР°СЂРѕР»СЏ РІ СЃРѕРѕС‚РІРµС‚СЃС‚РІРёРё СЃ РєСЂРёС‚РµСЂРёСЏРјРё СЃСЂРµРґРЅРµР№ СЃР»РѕР¶РЅРѕСЃС‚Рё
 		for (int i = 0; i < passChars.length; i++) {
 			if (passChars[i] != 0) continue; 
 			if (oneDigit)
@@ -86,10 +86,10 @@ public class PasswordGenerator {
 		int passLength = HARD_MIN_LENGTH + rnd.nextInt(MAX_LENGTH - HARD_MIN_LENGTH + 1);
 		char[] passChars = new char[passLength];
 		
-		// в сложном пароле должен быть хотя бы один символ в верхнем регистре 
+		// РІ СЃР»РѕР¶РЅРѕРј РїР°СЂРѕР»Рµ РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ С…РѕС‚СЏ Р±С‹ РѕРґРёРЅ СЃРёРјРІРѕР» РІ РІРµСЂС…РЅРµРј СЂРµРіРёСЃС‚СЂРµ 
 		passChars[rnd.nextInt(passChars.length)] = randomUpCaseChar();
 		
-		// также в пароле должны быть хотя бы две цифры
+		// С‚Р°РєР¶Рµ РІ РїР°СЂРѕР»Рµ РґРѕР»Р¶РЅС‹ Р±С‹С‚СЊ С…РѕС‚СЏ Р±С‹ РґРІРµ С†РёС„СЂС‹
 		int digitsToPlace = 2;
 		while (digitsToPlace > 0) {
 			int i = rnd.nextInt(passChars.length);
@@ -101,7 +101,7 @@ public class PasswordGenerator {
 				continue;
 		}	
 		
-		// остальные позиции заполняем произвольно
+		// РѕСЃС‚Р°Р»СЊРЅС‹Рµ РїРѕР·РёС†РёРё Р·Р°РїРѕР»РЅСЏРµРј РїСЂРѕРёР·РІРѕР»СЊРЅРѕ
 		for (int i = 0; i < passChars.length; i++) {
 			if (passChars[i] != 0) continue; 
 			passChars[i] = randomChar();
@@ -127,15 +127,15 @@ public class PasswordGenerator {
 	}
 	
 	public static int determinePasswordStrength(String password) {
-		// Сюда скопирован ранее написанный код из задания на проверку сложности пароля.
-		// Пригодится для проверки работы генератора :)
+		// РЎСЋРґР° СЃРєРѕРїРёСЂРѕРІР°РЅ СЂР°РЅРµРµ РЅР°РїРёСЃР°РЅРЅС‹Р№ РєРѕРґ РёР· Р·Р°РґР°РЅРёСЏ РЅР° РїСЂРѕРІРµСЂРєСѓ СЃР»РѕР¶РЅРѕСЃС‚Рё РїР°СЂРѕР»СЏ.
+		// РџСЂРёРіРѕРґРёС‚СЃСЏ РґР»СЏ РїСЂРѕРІРµСЂРєРё СЂР°Р±РѕС‚С‹ РіРµРЅРµСЂР°С‚РѕСЂР° :)
 		
 		boolean isNotShorter4 = password.length() >= 4;		
 		boolean isLonger8 = password.length() > 8;		
 				
 		int i = 0, upcase = 0, digits = 0;
 		while (i < password.length()) {
-			if ((password.charAt(i) >= 'A' && password.charAt(i) <= 'Z') || (password.charAt(i) >= 'А' && password.charAt(i) <= 'Я')) {
+			if ((password.charAt(i) >= 'A' && password.charAt(i) <= 'Z') || (password.charAt(i) >= 'Рђ' && password.charAt(i) <= 'РЇ')) {
 				upcase++;
 			}
 			if (password.charAt(i) >= '0' && (password.charAt(i) <= '9')) {
