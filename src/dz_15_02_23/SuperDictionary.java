@@ -155,10 +155,12 @@ public class SuperDictionary {
 			return "(словаря для целевого языка нет)";
 		
 		int sourceLang = detectLanguage(word);		
-		if (sourceLang == LANG_UNKNOWN)
+		if (sourceLang == LANG_UNKNOWN) {
 			return "(слова нет в словаре)";
-		else if (sourceLang == targetLang)
+		}
+		else if (sourceLang == targetLang) {
 			return "(исходный язык совпадает с целевым)";		
+		}
 		
 		return dictionary[targetLang][indexOfWord(dictionary[sourceLang], word)];
 	}

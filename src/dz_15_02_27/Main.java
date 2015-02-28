@@ -22,20 +22,35 @@ public class Main {
 	
 	public static void main(String[] args) {
 		
-		Student stud01 = new Student();
+		Group grp01 = new Group();
 		
-		stud01.setFirstName("Серго");
-		stud01.setLastName("Кильветров");
-		stud01.setEmail("sergo@killvetrov.io");
-		stud01.setPhoneNumber("+380 012 345-67-89");
-		stud01.setAge((byte) 27);
-		stud01.setPracticeStatus(true);
-		stud01.setPaymentStatus(true);
-		stud01.addNewSubject(new Subject("Физика", new Mark(9), new Mark(11), new Mark(10), new Mark(11), new Mark(10)));
-		stud01.addNewSubject(new Subject("Химия", new Mark(8), new Mark(8), new Mark(7), new Mark(8), new Mark(9), new Mark(13)));
+		Student myStudent = new Student();		
+		myStudent.setFirstName("Вовочка");
+		myStudent.setLastName("Вундеркинидзе");
+		myStudent.setEmail("wunder@univer.edu");
+		myStudent.setPhoneNumber("012 345-67-89");
+		myStudent.setAge(21);
+		myStudent.setPracticeStatus(true);
+		myStudent.setPaymentStatus(true);
+		myStudent.addNewSubject(new Subject("Физика", new Mark(9), new Mark(11), new Mark(10), new Mark(11), new Mark(10)));
+		myStudent.addNewSubject(new Subject("Химия", new Mark(8), new Mark(8), new Mark(7), new Mark(8), new Mark(9)));
+		myStudent.addNewSubject(new Subject("Математика"));
+		myStudent.addMarkToSubject("Математика", 9);
+		myStudent.addMarkToSubject("Математика", 10);
+		myStudent.addNewSubject(new Subject("Джава", new Mark(11), new Mark(12), new Mark(11), new Mark(12), new Mark(12), new Mark(12)));
 		
-		stud01.report();
+		//myStudent.reportFull();
 		
+		grp01.fillWithRandomData();
+		grp01.addStudent(myStudent);
+		grp01.reportStudentList();
+		
+		System.out.println();
+		grp01.reportStudentListByAverageMark();
+		
+		System.out.println("\nИнформация о лучшем студенте.");
+		grp01.getBestStudent().reportPhysical();
+		grp01.getBestStudent().reportMarksBySubject("Джава");
 	}
 	
 }

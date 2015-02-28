@@ -9,10 +9,7 @@ public class Mark {
 	
 	public Mark(int value) {
 		this.date = System.currentTimeMillis();
-		if (value >= 0 && value <= 12)  
-			this.value = value;
-		else
-			System.out.printf("Конструктор Mark(%d) - невозможно поставить неверную оценку.%n", value);
+		setValue(value);
 	}
 	
 	public long getDate() { 

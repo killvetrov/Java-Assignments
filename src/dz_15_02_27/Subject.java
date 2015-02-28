@@ -25,8 +25,8 @@ public class Subject {
 		this.title = title;
 	}
 	
-	public int getMarkByIndex(int index) {
-		return marks[index].getValue();
+	public Mark getMarkByIndex(int index) {
+		return marks[index];
 	}
 	
 	public void setMarkByIndex(int index, int newValue) {
