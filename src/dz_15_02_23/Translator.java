@@ -12,23 +12,23 @@ public class Translator {
 
 		Scanner scanIn = new Scanner(System.in);
 		SuperDictionary mySD = new SuperDictionary();
-		System.out.println("Словарь готов к работе. Слов в словаре: " + mySD.getWordCount() + ". Языков в словаре: " + mySD.getLangCount() + ".");
+		System.out.println("РЎР»РѕРІР°СЂСЊ РіРѕС‚РѕРІ Рє СЂР°Р±РѕС‚Рµ. РЎР»РѕРІ РІ СЃР»РѕРІР°СЂРµ: " + mySD.getWordCount() + ". РЇР·С‹РєРѕРІ РІ СЃР»РѕРІР°СЂРµ: " + mySD.getLangCount() + ".");
 		String word;
 		int targetLang;
 		
 		boolean enough = false;
 		while (!enough) {
-			System.out.print("Введите слово для перевода и нажмите ENTER: ");
+			System.out.print("Р’РІРµРґРёС‚Рµ СЃР»РѕРІРѕ РґР»СЏ РїРµСЂРµРІРѕРґР° Рё РЅР°Р¶РјРёС‚Рµ ENTER: ");
 			String inLine = scanIn.nextLine();
 			if (!inLine.trim().isEmpty())
 				word = inLine;			
 			else {
 				word = mySD.getRandomWord();
-				System.out.println("Слово не было введено, для работы выбрано случайное слово из словаря: " + word);
+				System.out.println("РЎР»РѕРІРѕ РЅРµ Р±С‹Р»Рѕ РІРІРµРґРµРЅРѕ, РґР»СЏ СЂР°Р±РѕС‚С‹ РІС‹Р±СЂР°РЅРѕ СЃР»СѓС‡Р°Р№РЅРѕРµ СЃР»РѕРІРѕ РёР· СЃР»РѕРІР°СЂСЏ: " + word);
 			}				
 			
-			System.out.print("На какой язык выполнить перевод? (");
-			// Перечисляем все доступные языки словаря для выбора
+			System.out.print("РќР° РєР°РєРѕР№ СЏР·С‹Рє РІС‹РїРѕР»РЅРёС‚СЊ РїРµСЂРµРІРѕРґ? (");
+			// РџРµСЂРµС‡РёСЃР»СЏРµРј РІСЃРµ РґРѕСЃС‚СѓРїРЅС‹Рµ СЏР·С‹РєРё СЃР»РѕРІР°СЂСЏ РґР»СЏ РІС‹Р±РѕСЂР°
 			for (int i = 1; i <= mySD.getLangCount(); i++)
 				System.out.print(i + " = " + mySD.getLangNameByID(i - 1) + (i < mySD.getLangCount() ? "; " : ""));
 			System.out.print("): ");
@@ -37,18 +37,18 @@ public class Translator {
 				targetLang = Integer.valueOf(inLine) - 1;
 			else {				
 				targetLang = rnd.nextInt(mySD.getLangCount());
-				System.out.println("Язык не был указан, для работы выбран случайный язык: " + mySD.getLangNameByID(targetLang));
+				System.out.println("РЇР·С‹Рє РЅРµ Р±С‹Р» СѓРєР°Р·Р°РЅ, РґР»СЏ СЂР°Р±РѕС‚С‹ РІС‹Р±СЂР°РЅ СЃР»СѓС‡Р°Р№РЅС‹Р№ СЏР·С‹Рє: " + mySD.getLangNameByID(targetLang));
 			}
 			
 			System.out.println(mySD.translate(word, targetLang));
 			
-			System.out.print("Перевести еще одно слово? (1 = да; другой символ = нет): ");
+			System.out.print("РџРµСЂРµРІРµСЃС‚Рё РµС‰Рµ РѕРґРЅРѕ СЃР»РѕРІРѕ? (1 = РґР°; РґСЂСѓРіРѕР№ СЃРёРјРІРѕР» = РЅРµС‚): ");
 			inLine = scanIn.nextLine();
 			if (!inLine.trim().equals("1")) enough = true; 
 		}
 		scanIn.close();
 		
-		System.out.println("Словарь закрыт.");
+		System.out.println("РЎР»РѕРІР°СЂСЊ Р·Р°РєСЂС‹С‚.");
 
 	}
 
