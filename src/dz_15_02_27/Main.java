@@ -19,38 +19,68 @@
 package dz_15_02_27;
 
 public class Main {
-	
+
 	public static void main(String[] args) {
-		
+
 		Group grp01 = new Group();
-		
-		Student myStudent = new Student();		
+
+		Student myStudent = new Student();
 		myStudent.setFirstName("Вовочка");
 		myStudent.setLastName("Вундеркинидзе");
 		myStudent.setEmail("wunder@univer.edu");
-		myStudent.setPhoneNumber("012 345-67-89");
+		myStudent.setPhoneNumber("012 345-67-892");
 		myStudent.setAge(21);
 		myStudent.setPracticeStatus(true);
 		myStudent.setPaymentStatus(true);
-		myStudent.addNewSubject(new Subject("Физика", new Mark(9), new Mark(11), new Mark(10), new Mark(11), new Mark(10)));
-		myStudent.addNewSubject(new Subject("Химия", new Mark(8), new Mark(8), new Mark(7), new Mark(8), new Mark(9)));
+		myStudent.addNewSubject(new Subject("Физика", new Mark(9),
+				new Mark(11), new Mark(10), new Mark(11), new Mark(10)));
+		myStudent.addNewSubject(new Subject("Химия", new Mark(8), new Mark(8),
+				new Mark(7), new Mark(8), new Mark(9)));
 		myStudent.addNewSubject(new Subject("Математика"));
 		myStudent.addMarkToSubject("Математика", 9);
 		myStudent.addMarkToSubject("Математика", 10);
-		myStudent.addNewSubject(new Subject("Джава", new Mark(11), new Mark(12), new Mark(11), new Mark(12), new Mark(12), new Mark(12)));
-		
-		//myStudent.reportFull();
-		
+		myStudent.addNewSubject(new Subject("Джава", new Mark(11),
+				new Mark(12), new Mark(11), new Mark(12), new Mark(12),
+				new Mark(12)));
+
+		Student myStudent2 = new Student();
+		myStudent2.setFirstName("Вовочка");
+		myStudent2.setLastName("Вундеркинидзе2");
+		myStudent2.setEmail("wunder@univer.edu");
+		myStudent2.setPhoneNumber("012 345-67-89");
+		myStudent2.setAge(21);
+		myStudent2.setPracticeStatus(true);
+		myStudent2.setPaymentStatus(true);
+		myStudent2.addNewSubject(new Subject("Физика", new Mark(9),
+				new Mark(11), new Mark(10), new Mark(11), new Mark(10)));
+		myStudent2.addNewSubject(new Subject("Химия", new Mark(8), new Mark(8),
+				new Mark(7), new Mark(8), new Mark(9)));
+		myStudent2.addNewSubject(new Subject("Математика"));
+		myStudent2.addMarkToSubject("Математика", 9);
+		myStudent2.addMarkToSubject("Математика", 10);
+		myStudent2.addNewSubject(new Subject("Джава", new Mark(11),
+				new Mark(12), new Mark(11), new Mark(12), new Mark(12),
+				new Mark(12)));
+
+		// myStudent.reportFull();
+
 		grp01.fillWithRandomData();
 		grp01.addStudent(myStudent);
-		grp01.reportStudentList();
+		grp01.addStudent(myStudent2);
 		
+		grp01.setLeaderID(grp01.getStudentByLastName("Вундеркинидзе2").getID());
+		grp01.setLeaderID(grp01.getStudentByLastName("Вундеркинидзе").getID());
+		
+		grp01.reportStudentList();
+
+		
+
 		System.out.println();
 		grp01.reportStudentListByAverageMark();
-		
+
 		System.out.println("\nИнформация о лучшем студенте.");
 		grp01.getBestStudent().reportPhysical();
 		grp01.getBestStudent().reportMarksBySubject("Джава");
 	}
-	
+
 }
