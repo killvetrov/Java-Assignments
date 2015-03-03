@@ -76,24 +76,35 @@ public class HDL {
 		new HDLChar('%', "151"), new HDLChar('$', "152"), new HDLChar('^', "153")
 	};
 	
-	private static char getOriginFromCode(String code) {
-		char result = 0;
+	public static String filterHDLString (String data) {
+		String filteredString = data;
+		for (int i = 0; i < filteredString.length(); i++) {			
+			if (getHDLCharByOrigin(filteredString.charAt(i)) == null) {
+				filteredString = filteredString.replace("" + filteredString.charAt(i), "");
+				i--;
+			}
+		}
+		return filteredString;
+	}
+	
+	private static HDLChar getHDLCharByCode(String code) {
+		HDLChar result = null;
 		if (code.length() == 3) {
 			for (int i = 0; i < hdlAlphabet.length; i++)
 				if (hdlAlphabet[i].getCode().equals(code)) {
-					result = hdlAlphabet[i].getOrigin();
+					result = hdlAlphabet[i];
 					break;
 				}
 		}
 		return result;
 	}
 	
-	private static String getCodeFromOrigin(char origin) {
-		String result = null;
+	private static HDLChar getHDLCharByOrigin(char origin) {
+		HDLChar result = null;
 		if (origin != 0) {
 			for (int i = 0; i < hdlAlphabet.length; i++)
 				if (hdlAlphabet[i].getOrigin() == origin) {
-					result = hdlAlphabet[i].getCode();
+					result = hdlAlphabet[i];
 					break;
 				}
 		}
@@ -103,46 +114,66 @@ public class HDL {
 	public static String encode(String data) {
 		String encodedString = "";
 		
+		data = filterHDLString(data);
+		
 		for (int i = 0; i < data.length(); i++) {
-			String code = getCodeFromOrigin(data.charAt(i));
-			if (code != null)
-				encodedString = encodedString.concat(code);
+			HDLChar hdlch = getHDLCharByOrigin(data.charAt(i));
+			if (hdlch != null)
+				encodedString = encodedString.concat(hdlch.getCode());
 		}
 		
 		return encodedString;		
 	}
 	
-	public static String encodeWithPassword(String data, String password) {
+	public static String encode(String data, String password) {
 		String encodedString = "";
 		
-		password = password.trim();
+		data = encode(data);
 		
-		for (int i = 0; i < data.length(); i++) {
-			encodedString = encodedString.concat(String.format("%03d", data.charAt(i) + password.charAt(i % (password.length()))));
+		password = encode(password.trim());		
+		int checksum = 0;
+		for (int i = 2; i < password.length(); i += 3)
+			checksum += Integer.valueOf(password.substring(i - 2, i + 1)) * (password.length() - i);
+		checksum = checksum % 300;
+		
+		for (int i = 2; i < data.length(); i += 3) {
+			encodedString = encodedString.concat(String.format("%03d", 
+					((Integer.valueOf(data.substring(i - 2, i + 1))) ^ 
+					(Integer.valueOf(password.substring((i - 2) % password.length(), (i - 2) % password.length() + 3))))
+					^ checksum));
 		}
 		
 		return encodedString;
-	}
-	
-	public static String decodeWithPassword(String data, String password) {
-		String decodedString = "";
-		
-		password = password.trim();
-		
-		for (int i = 2; i < data.length(); i += 3) {
-			decodedString = decodedString.concat(String.valueOf((char) (Integer.valueOf(data.substring(i - 2, i + 1)) - password.charAt((i / 3) % (password.length())))));
-		}
-		
-		return decodedString;
 	}
 	
 	public static String decode(String data) {
 		String decodedString = "";
 		
 		for (int i = 2; i < data.length(); i += 3) {
-			char origin = getOriginFromCode(data.substring(i - 2, i + 1));
-			if (origin != 0)
-				decodedString = decodedString.concat(String.valueOf(origin));
+			HDLChar hdlch = getHDLCharByCode(data.substring(i - 2, i + 1));
+			if (hdlch != null)
+				decodedString = decodedString.concat(String.valueOf(hdlch.getOrigin()));
+		}
+		
+		return decodedString;
+	}
+	
+	public static String decode(String data, String password) {
+		String decodedString = "";
+		
+		password = encode(password.trim());		
+		int checksum = 0;
+		for (int i = 2; i < password.length(); i += 3)
+			checksum += Integer.valueOf(password.substring(i - 2, i + 1)) * (password.length() - i);
+		checksum = checksum % 300;
+		
+		for (int i = 2; i < data.length(); i += 3) {
+			HDLChar hdlch = getHDLCharByCode(String.format("%03d", 
+					((Integer.valueOf(data.substring(i - 2, i + 1))) ^ checksum) ^ 
+					(Integer.valueOf(password.substring((i - 2) % password.length(), (i - 2) % password.length() + 3)))
+					));
+			if (hdlch != null) 
+				decodedString = decodedString.concat("" + hdlch.getOrigin());
 		}
 		
 		return decodedString;
