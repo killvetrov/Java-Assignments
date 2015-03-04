@@ -7,10 +7,11 @@ package dz_15_02_23_2;
 import java.util.Random;
 
 public class PasswordGenerator {
-	
+		
 	final public static int LOW = 0;
 	final public static int MEDIUM = 1;
 	final public static int HARD = 2;
+	final public static int PASSWORD_TOO_SHORT = -1;
 	
 	final private static int MAX_LENGTH = 16;
 	final private static int HARD_MIN_LENGTH = 9;
@@ -133,6 +134,9 @@ public class PasswordGenerator {
 	public static int determinePasswordStrength(String password) {
 		// Сюда скопирован ранее написанный код из задания на проверку сложности пароля.
 		// Пригодится для проверки работы генератора :)
+		
+		if (password.length() < MIN_LENGTH)
+			return PASSWORD_TOO_SHORT;
 		
 		boolean isNotShorter4 = password.length() >= 4;		
 		boolean isLonger8 = password.length() > 8;		

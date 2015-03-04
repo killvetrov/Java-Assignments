@@ -125,7 +125,10 @@ public class HDL {
 		return encodedString;		
 	}
 	
-	public static String encode(String data, String password) {
+	public static String encode(String data, String password) {		
+		if (password.trim().isEmpty())
+			return encode(data);
+		
 		String encodedString = "";
 		
 		data = encode(data);
@@ -149,6 +152,8 @@ public class HDL {
 	public static String decode(String data) {
 		String decodedString = "";
 		
+		data = filterdecode(data);
+		
 		for (int i = 2; i < data.length(); i += 3) {
 			HDLChar hdlch = getHDLCharByCode(data.substring(i - 2, i + 1));
 			if (hdlch != null)
@@ -159,7 +164,12 @@ public class HDL {
 	}
 	
 	public static String decode(String data, String password) {
+		if (password.trim().isEmpty())
+			return decode(data);
+		
 		String decodedString = "";
+		
+		data = filterdecode(data);
 		
 		password = encode(password.trim());		
 		int checksum = 0;
@@ -177,6 +187,27 @@ public class HDL {
 		}
 		
 		return decodedString;
+	}
+	
+	private static String filterdecode(String text) {
+
+		if (text.isEmpty() == true) {
+			text = "HDL версия 1.1 - пустая строка";
+		}
+		for (int i = 0; i < text.length(); i++) {
+			if (text.charAt(i) == (char) ' ') {
+				text = text.replace("" + text.charAt(i), "");
+			}
+		}
+		for (int i = 0; i < text.length(); i++) {
+			if (text.charAt(i) < (char) '0' || text.charAt(i) > (char) '9') {
+				text = text.replace("" + text.charAt(i), "");
+			}
+		}
+		if (text.length() % 3 != 0) {
+			text = "HDL версия 1.2 - неверная длинна";
+		}
+		return text;
 	}
 	
 }
