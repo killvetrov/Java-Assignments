@@ -6,6 +6,8 @@ public class PwdGenMain {
 	
 	public static void main(String[] args) {
 		
+		System.out.println(PasswordGenerator.generate(PasswordGenerator.LOW));
+		
 		Scanner scanIn = new Scanner(System.in);
 		String inLine, password;
 		int passStrength = Integer.MIN_VALUE, numPasswords, errorCount;

@@ -136,13 +136,13 @@ public class HDL {
 		password = encode(password.trim());		
 		int checksum = 0;
 		for (int i = 2; i < password.length(); i += 3)
-			checksum += Integer.valueOf(password.substring(i - 2, i + 1)) * (password.length() - i);
+			checksum += Integer.valueOf(password.substring(i - 2, i + 1)) * (password.length() - i) + 1;
 		checksum = checksum % 300;
 		
 		for (int i = 2; i < data.length(); i += 3) {
 			encodedString = encodedString.concat(String.format("%03d", 
 					((Integer.valueOf(data.substring(i - 2, i + 1))) ^ 
-					(Integer.valueOf(password.substring((i - 2) % password.length(), (i - 2) % password.length() + 3))))
+					(Integer.valueOf(password.substring((i - 2) % password.length(), (i - 2) % password.length() + 3)) + 1))
 					^ checksum));
 		}
 		
@@ -174,13 +174,13 @@ public class HDL {
 		password = encode(password.trim());		
 		int checksum = 0;
 		for (int i = 2; i < password.length(); i += 3)
-			checksum += Integer.valueOf(password.substring(i - 2, i + 1)) * (password.length() - i);
+			checksum += Integer.valueOf(password.substring(i - 2, i + 1)) * (password.length() - i) + 1;
 		checksum = checksum % 300;
 		
 		for (int i = 2; i < data.length(); i += 3) {
 			HDLChar hdlch = getHDLCharByCode(String.format("%03d", 
 					((Integer.valueOf(data.substring(i - 2, i + 1))) ^ checksum) ^ 
-					(Integer.valueOf(password.substring((i - 2) % password.length(), (i - 2) % password.length() + 3)))
+					(Integer.valueOf(password.substring((i - 2) % password.length(), (i - 2) % password.length() + 3)) + 1)
 					));
 			if (hdlch != null) 
 				decodedString = decodedString.concat("" + hdlch.getOrigin());
