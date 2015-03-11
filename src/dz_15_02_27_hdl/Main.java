@@ -3,6 +3,7 @@ package dz_15_02_27_hdl;
 import java.util.Scanner;
 
 import dz_15_02_23_2.PasswordGenerator;
+import dz_15_02_27_hdl.HDL.HDLChar;
 
 public class Main {
 	
@@ -12,9 +13,29 @@ public class Main {
 //			System.out.printf("new HDLChar('%s', \"%03d\"),%n", (char) (' ' + i - 1), i + 116);
 //		}
 		
-		System.out.println((int) 'a');
-		System.out.println(encryption.OurCode.encode("тест тест тест", "00b"));
-		System.out.println(encryption.HDL.decode("022106036105036023035092106106022106036105"));
+		for (int i = 0; i < 154; i++) {
+			System.out.print(HDL.hdlAlphabet[i].getOrigin() + " ");
+				System.out.println(my.hdl.HDL.enCode("з", "" + HDL.hdlAlphabet[i].getOrigin()));
+		}	
+		
+		
+		
+//		System.out.println(my.hdl.HDL.enCode("eddeddedde", "bbbbbb"));
+		for (int i = 0; i < 154; i++){
+			System.out.print(HDL.hdlAlphabet[i].getOrigin() + " ");
+		System.out.println(my.hdl.HDL.deCode("103070078081077070055142129070064071053055053053", "E√6–≈%@" /*+ HDL.hdlAlphabet[i].getOrigin()*/));
+		}
+		
+//		System.out.println(HDL.encode("getOrigin", "topsecret"));
+//		System.out.println(HDL.decode("073080088096079080079086066", "topsecres"));
+		
+//		System.out.println((int) 'a');
+//		System.out.println(encryption.OurCode.encode("–ома, какой счет? :)", "€€€€€€"));
+//		System.out.println(HDL.encodeReverse("–ома, какой счет? :)", "€€€€€€"));
+//		System.out.println(encryption.OurCode.decode("067095062063144124052056077061144058076063081055144134135124", "hacked"));
+//		System.out.println(HDL.encode("e"));
+//		System.out.println(encryption.HDL.encode("t"));
+//		System.out.println(encryption.HDL.decode("022106036105036023035092106106022106036105"));
 		
 //		Scanner scanIn = new Scanner(System.in);
 //		String inLine, inString, inPass;
