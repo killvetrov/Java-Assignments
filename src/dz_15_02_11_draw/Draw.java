@@ -8,7 +8,7 @@ public class Draw {
 		
 		Random rnd = new Random();
 		
-		String shape = "diamond-";
+		String shape = "circle-";
 		
 		int size = (10 + rnd.nextInt(16)) * 2 + 1;
 		//size = 25;
