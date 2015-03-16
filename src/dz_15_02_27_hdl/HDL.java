@@ -137,7 +137,7 @@ public class HDL {
 		int checksum = 0;
 		for (int i = 2; i < password.length(); i += 3)
 			checksum += Integer.valueOf(password.substring(i - 2, i + 1)) * (password.length() - i) + 1;
-		checksum = checksum % 300;
+		checksum = checksum % hdlAlphabet.length;
 		
 		for (int i = 2; i < data.length(); i += 3) {
 			encodedString = encodedString.concat(String.format("%03d", 
@@ -175,7 +175,7 @@ public class HDL {
 		int checksum = 0;
 		for (int i = 2; i < password.length(); i += 3)
 			checksum += Integer.valueOf(password.substring(i - 2, i + 1)) * (password.length() - i) + 1;
-		checksum = checksum % 300;
+		checksum = (checksum % hdlAlphabet.length) / 2;
 		
 		for (int i = 2; i < data.length(); i += 3) {
 			HDLChar hdlch = getHDLCharByCode(String.format("%03d", 
@@ -208,60 +208,6 @@ public class HDL {
 			text = "HDL версия 1.2 - неверная длинна";
 		}
 		return text;
-	}
-	
-	public static String encodeReverse(String data, String password) {
-	
-		String encodedString = "";
-		
-		data = encode(data);
-		
-		char[] chdata = data.toCharArray();
-		
-		for (int i = 5; i < chdata.length; i += 6) {
-			char temp1 = chdata[i - 5];
-			char temp2 = chdata[i - 4];
-			char temp3 = chdata[i - 3];
-			chdata[i - 5] = chdata[i - 2];
-			chdata[i - 4] = chdata[i - 1];
-			chdata[i - 3] = chdata[i];
-			chdata[i - 2] = temp1;
-			chdata[i - 1] = temp2;
-			chdata[i] = temp3;
-		}
-		
-		data = String.valueOf(chdata);
-				
-		password = encode(password.trim());		
-		chdata = password.toCharArray();
-		for (int i = 5; i < chdata.length; i += 6) {
-			char temp1 = chdata[i - 5];
-			char temp2 = chdata[i - 4];
-			char temp3 = chdata[i - 3];
-			chdata[i - 5] = chdata[i - 2];
-			chdata[i - 4] = chdata[i - 1];
-			chdata[i - 3] = chdata[i];
-			chdata[i - 2] = temp1;
-			chdata[i - 1] = temp2;
-			chdata[i] = temp3;
-		}
-		password = String.valueOf(chdata);
-		
-		for (int i = 2; i < data.length(); i += 3) {
-			if (i % 2 == 0)
-				encodedString = encodedString.concat(String.format("%03d", 
-						Integer.valueOf(data.substring(i - 2, i + 1)) + 
-						Integer.valueOf(password.substring((i - 2) % password.length(), (i - 2) % password.length() + 3))
-						));
-			else				
-				encodedString = encodedString.concat(String.format("%03d", 
-						Integer.valueOf(data.substring(i - 2, i + 1)) + 
-						0*hdlAlphabet.length - 0 - Integer.valueOf(password.substring((i - 2) % password.length(), (i - 2) % password.length() + 3))						));
-				
-		}
-		
-		return encodedString;
-		
 	}
 	
 }

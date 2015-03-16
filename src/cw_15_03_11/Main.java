@@ -25,10 +25,16 @@ public class Main {
 		System.out.println("Площадь = " + myRect.calcArea());
 		System.out.println();
 		
-		Circle myCircle = new Circle(19);		
-		myCircle.draw(true);
+		Circle myCircle = new Circle(15);		
+		myCircle.draw(false);
 		System.out.println("Длина окружности = " + myCircle.calcLength());
 		System.out.println("Площадь окружности = " + myCircle.calcArea());
+		System.out.println();
+		
+		Triangle myTri = new Triangle(12, 8);
+		myTri.draw();
+		System.out.println("Периметр треугольника = " + myTri.calcPerimeter());
+		System.out.println("Площадь треугольника = " + myTri.calcArea());
 		
 //		Phone myNokia = new Phone("Nokia 3110", "+380 913-33-33");
 //		Phone mySiemens = new Phone("Siemens A30", "+380 113-55-55");
