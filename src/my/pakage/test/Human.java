@@ -2,12 +2,14 @@ package my.pakage.test;
 
 public class Human {
 
-	private String name;
+	protected String name;
 
-	private int health;
-	private int damage;
-	private int experience;
-	private int level;
+	protected int health;
+	protected int damage;
+	protected int experience;
+	protected int level;
+	
+	
 
 	public int MAX_HEALTH;
 	public int EXPERIENCE_FOR_KILL;
