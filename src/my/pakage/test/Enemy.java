@@ -42,12 +42,12 @@ public class Enemy extends Human {
 	}
 
 	public void messagePickUpWeapon() {
-		System.out.println("Player" + this.name + "pick up weapon");
+		System.out.println("Enemy " + this.name + " pick up weapon");
 
 	}
 
 	public void messageDropWeapon() {
-		System.out.println("Player" + this.name + "drop weapon");
+		System.out.println("Enemy " + this.name + " drop weapon");
 
 	}
 }
