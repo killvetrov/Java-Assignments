@@ -25,7 +25,7 @@ public class Main {
 		Human attacker, target;
 		int attackerIndex, targetIndex;
 		
-		for (int i = 1; i <= 10; i++) {			
+		for (int i = 1; i <= 100; i++) {			
 			if (mobs.length < 2) {
 				System.out.println("Only one player is still alive. " + mobs[0].name + " wins the game!");
 				break;
@@ -49,6 +49,7 @@ public class Main {
 						continue;
 					mobsMinusOne[newIndex++] = mobs[j];
 				}
+				mobs = mobsMinusOne;
 			}
 			
 			try {
