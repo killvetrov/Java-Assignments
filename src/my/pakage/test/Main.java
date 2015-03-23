@@ -41,6 +41,16 @@ public class Main {
 			
 			attacker.atack(target);
 			
+			if (target.isKilled()) {
+				Human[] mobsMinusOne = new Human[mobs.length - 1];
+				int newIndex = 0;
+				for (int j = 0; j < mobs.length; j++) {
+					if (mobs[j].equals(target))
+						continue;
+					mobsMinusOne[newIndex++] = mobs[j];
+				}
+			}
+			
 			try {
 				Thread.currentThread().sleep(2000);
 			} catch (Exception e) {};
