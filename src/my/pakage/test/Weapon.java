@@ -20,12 +20,12 @@ public class Weapon {
 	}
 	
 	
-	public int use(){
+	public int use() {
 		int x = rnd.nextInt(101);
 		
 		int curDamage = minDamage + rnd.nextInt(maxDamage - minDamage + 1);
 		
-		int dmg = x > critChance ? curDamage * critKoef : curDamage;
+		int dmg = x <= critChance ? curDamage * critKoef : curDamage;
 		
 		return dmg;
 	}

@@ -6,12 +6,18 @@ public class Player extends Human {
 		
 	public Player(String name, int damage, int level, int mAX_HEALTH,
 			int eXPERIENCE_FOR_KILL, int eXPERIENCE_FOR_NEW_LEVEL) {
-		super(name, damage, level, mAX_HEALTH, eXPERIENCE_FOR_KILL,
-				eXPERIENCE_FOR_NEW_LEVEL);
-		// TODO Auto-generated constructor stub
+		MAX_HEALTH = mAX_HEALTH;
+		EXPERIENCE_FOR_KILL = eXPERIENCE_FOR_KILL;
+		EXPERIENCE_FOR_NEW_LEVEL = eXPERIENCE_FOR_NEW_LEVEL;
+
+		this.name = name;
+		this.damage = damage;
+		this.experience = 0;
+		this.level = level;
+		this.health = mAX_HEALTH;
 	}
 	
-	public void attack(Human human) {
+	public void atack(Human human) {
 		if (human.isKilled() || this.isKilled())
 			return;
 		
@@ -29,6 +35,19 @@ public class Player extends Human {
 		} else {
 			messageDamage(this.name, human.name, curDmg);
 		}
+	}
+	
+	public boolean takeDamage(int damage) {
+		boolean isKilled = false;
+
+		this.health -= damage;
+
+		if (this.health <= 0) {
+			this.health = 0;
+			isKilled = true;
+		}
+
+		return isKilled;
 	}
 	
 	public void pickUpWeapon(Weapon weapon) {
