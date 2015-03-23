@@ -81,6 +81,8 @@ public class Main {
 		System.out.println("\nИнформация о лучшем студенте.");
 		grp01.getBestStudent().reportPhysical();
 		grp01.getBestStudent().reportMarksBySubject("Джава");
+		
+		System.out.println(myStudent.toString());
 	}
 
 }
