@@ -2,6 +2,6 @@ package cw_15_03_23_timer;
 
 public interface OnTimerTickListener {
 
-	public void onTimerTick();
+	public void onTimerTick(Timer timer);
 	
 }
