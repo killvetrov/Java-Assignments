@@ -2,9 +2,17 @@ package my.pakage.test;
 
 import java.util.Random;
 
+import org.fusesource.jansi.AnsiConsole;
+import static org.fusesource.jansi.Ansi.*;
+
 public class Main {
 	
 	public static void main(String[] args) {
+		
+		AnsiConsole.systemInstall();
+		
+		System.out.print(ansi().eraseScreen().cursor(2, 1));
+		
 		Random rnd = new Random();
 		
 		Human[] mobs = new Human[10];		
@@ -20,7 +28,17 @@ public class Main {
 		mobs[8] = new HardEnemy("HardEnemy-1", 20, 1, 10, 100);
 		mobs[9] = new HardEnemy("HardEnemy-2", 20, 1, 10, 100);
 		
-		System.out.println("\nStarting the battle with " + mobs.length + " players!\n");		
+		int countPlayers = 0, countEnemies = 0;
+		for (int i = 0; i < mobs.length; i++) {
+			if (mobs[i] instanceof Player)
+				countPlayers++;
+			else if (mobs[i] instanceof Enemy)
+				countEnemies++;
+		}
+		
+		System.out.print(ansi().bold());
+		System.out.println("\nStarting the battle with " + mobs.length + " players!\n");
+		System.out.print(ansi().boldOff());
 		
 		Human attacker, target;
 		int attackerIndex, targetIndex;
@@ -29,19 +47,43 @@ public class Main {
 			if (mobs.length < 2) {
 				System.out.println("Only one player is still alive. " + mobs[0].name + " wins the game!");
 				break;
-			}			
+			}
 			
-			System.out.println("-------- Turn " + i + " ----------------------------------------");
+			if (countPlayers == 0) {
+				System.out.println("All players are dead. Enemies team wins!");
+				break;
+			}
+			
+			if (countEnemies == 0) {
+				System.out.println("All enemies are dead. Players team wins!");
+				break;
+			}
 			
 			attacker = mobs[attackerIndex = rnd.nextInt(mobs.length)];
 			targetIndex = rnd.nextInt(mobs.length - 1);
 			if (targetIndex == attackerIndex) 
 				targetIndex = mobs.length - 1;
-			target = mobs[targetIndex];  
+			target = mobs[targetIndex];
 			
+			if (attacker.getClass().getSuperclass().equals(target.getClass().getSuperclass())) {				
+				i--;
+				continue;
+			};
+			
+			if (i > 1) 
+				System.out.print(ansi().cursorUp(3));
+			System.out.print(ansi().eraseScreen(Erase.FORWARD));
+			System.out.println("-------- Turn " + i + " (" + mobs.length + " mobs in the game - " + countPlayers + "P/" + countEnemies + "E"  + ") --------------------------------");
+			
+			attacker.printHealthBar(); System.out.print(" "); target.printHealthBar(); System.out.print(" ");
 			attacker.atack(target);
 			
 			if (target.isKilled()) {
+				if (target instanceof Player) 
+					countPlayers--;
+				else if (target instanceof Enemy)
+					countEnemies--;
+				
 				Human[] mobsMinusOne = new Human[mobs.length - 1];
 				int newIndex = 0;
 				for (int j = 0; j < mobs.length; j++) {
@@ -50,10 +92,10 @@ public class Main {
 					mobsMinusOne[newIndex++] = mobs[j];
 				}
 				mobs = mobsMinusOne;
-			}
+			}			
 			
 			try {
-				Thread.currentThread().sleep(2000);
+				Thread.sleep(2000);
 			} catch (Exception e) {};
 			
 		}

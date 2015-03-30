@@ -2,6 +2,8 @@ package my.pakage.test;
 
 import java.util.Random;
 
+import static org.fusesource.jansi.Ansi.*;
+
 public class Weapon {
 	private Random rnd = new Random();
 	
@@ -31,7 +33,8 @@ public class Weapon {
 	}
 	
 	public String getName() {
-		return this.name + " (damage: " + minDamage + "-" + maxDamage + ")";
+		
+		return ansi().fg(Color.CYAN) + this.name + ansi().reset() + " (damage: " + minDamage + "-" + maxDamage + ")";
 	}
 	
 	

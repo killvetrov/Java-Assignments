@@ -61,7 +61,7 @@ public class Enemy extends Human {
 	}	
 
 	public void messagePickUpWeapon() {
-		System.out.println("Enemy " + this.name + " picked up a weapon " + weapons.getName());
+		//System.out.println("Enemy " + this.name + " picked up a weapon " + weapons.getName());
 
 	}
 

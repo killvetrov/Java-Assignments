@@ -1,4 +1,4 @@
-package my.pakage.test;
+package cw_15_03_18_2;
 
 public class A {
 

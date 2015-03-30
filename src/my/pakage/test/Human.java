@@ -1,5 +1,9 @@
 package my.pakage.test;
 
+import static org.fusesource.jansi.Ansi.*;
+
+import org.fusesource.jansi.AnsiConsole;
+
 public abstract class Human {
 
 	protected String name;
@@ -33,13 +37,33 @@ public abstract class Human {
 	}
 
 	public void messageDamage(String dagame_from, String damage_to, int damage) {
-		System.out.println(dagame_from + " causes damage "
-				+ damage_to + ", hit " + damage + " health" + "\n");
+//		System.out.println(dagame_from + " causes damage "
+//				+ damage_to + ", hit " + damage + " health" + "\n");
 	}
 
 	public void messageKill(String dagame_from, String damage_to) {
-		System.out
-				.println(dagame_from + " kill " + damage_to + "\n");
+//		System.out.print(ansi().bg(Color.RED));
+//		System.out
+//				.println(dagame_from + " kill " + damage_to + "\n");
+//		System.out.print(ansi().reset());
+	}
+	
+	public void printHealthBar() {
+		System.out.printf("%3d/%3d [", health, MAX_HEALTH);
+		for (int i = 0; i <= 5; i++) {
+			if ( (health != 0) && ((double) health / (double) MAX_HEALTH) >= ((double) i / 5.0) ) {
+				System.out.print(ansi().bg(Color.RED));
+			} else {
+				System.out.print(ansi().bg(Color.BLACK));				
+			}	
+			System.out.print(' ');
+		}		
+		System.out.print(ansi().reset());
+		System.out.print("]");
+	}
+	
+	public void heal() {
+		health = MAX_HEALTH;
 	}
 
 }

@@ -22,11 +22,11 @@ public class Timer {
 				}
 			} catch (InterruptedException e) {
 				interrupted = true;
-				System.out.println("[STOP] " + Timer.this.toString());
+				//System.out.println("[STOP] " + Timer.this.toString());
 			}
 
-			if (!interrupted)
-				System.out.println("[ELAPSED] " + Timer.this.toString());
+			//if (!interrupted)
+				//System.out.println("[ELAPSED] " + Timer.this.toString());
 		}
 	};
 
@@ -69,7 +69,7 @@ public class Timer {
 			return;
 
 		tickCount = 0;
-		System.out.println("[START] " + this.toString());
+		//System.out.println("[START] " + this.toString());
 
 		try {
 			timerThread.start();
