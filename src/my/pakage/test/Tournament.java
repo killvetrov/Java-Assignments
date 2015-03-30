@@ -101,8 +101,9 @@ public class Tournament extends Thread {
 	
 	public void drawTable() {
 		
-		final char[] tableChars = { '│' , '┤', '┐', '└', '┴', '┬', '├', '─', '┼', '┘', '┌'};				
-			
+		//final char[] tableChars = { '│' , '┤', '┐', '└', '┴', '┬', '├', '─', '┼', '┘', '┌'};				
+		final char[] tableChars = { '*' , '*', '*', '*', '*', '*', '*', '*', '*', '*', '*'};
+		
 		char[][] output = new char[ bracket[currentRound].length * 3 / 2 + 3 ][79];
 		
 		System.out.printf("%n%n");
@@ -298,7 +299,7 @@ class Duel extends Thread {
 			//if (myTournament.currentRound == 0) {
 				myTournament.fillBracketTable();
 				try {
-					Thread.sleep(200);
+					Thread.sleep(2000);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}			
