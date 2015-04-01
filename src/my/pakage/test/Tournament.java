@@ -87,6 +87,10 @@ public class Tournament extends Thread {
 			System.out.print(ansi().cursorUp(1));
 			System.out.print(ansi().cursorRight(tableMap[0] + 3));
 			bracket[currentRound][i].printHealthBar();
+			System.out.print(ansi().cursorRight(3).saveCursorPosition());
+			System.out.print("                                   ");
+			System.out.print(ansi().restorCursorPosition());
+			System.out.print(ansi().render(bracket[currentRound][i].status));
 //			if (!bracket[round][i].isKilled())
 //				bracket[round][i].printHealthBar();
 //			else {
@@ -181,7 +185,18 @@ public class Tournament extends Thread {
 		for (int iRound = 0; iRound < finalRound; iRound++) { 
 		
 			//reportRoundBracket(iRound);
+			
+			if (iRound > 0) {
+				for (int i = 0; i < bracket[iRound].length; i++)
+					bracket[iRound][i].heal();
+			}
+			
 			drawTable();
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e1) {
+				e1.printStackTrace();
+			}
 
 			duels = new Duel[bracket[iRound].length];
 			int j = 0;
@@ -289,16 +304,19 @@ class Duel extends Thread {
 	
 	public void run() {		
 		do {
-			if (turn)
+			if (turn) {
 				p1.atack(p2);
-			else
-				p2.atack(p1);				
+				p1.status = "@|bold,green >|@ @|bold " + p1.status + "|@";
+			} else {
+				p2.atack(p1);
+				p2.status = "@|bold,green >|@ @|bold " + p2.status + "|@";
+			}
 			turn = !turn;
 			
 			//if (myTournament.currentRound == 0) {
 				myTournament.fillBracketTable();
 				try {
-					Thread.sleep(200);
+					Thread.sleep(2000);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}			
@@ -306,7 +324,6 @@ class Duel extends Thread {
 			
 		} while (!(p1.isKilled() || p2.isKilled()));
 		Human winner = p2.isKilled() ? p1 : p2;
-		winner.heal();
 		//myTournament.fillBracketTable(0);
 		myTournament.bracket[myTournament.currentRound + 1][winnerPlace] = winner;		
 	};

@@ -46,8 +46,10 @@ public class Player extends Human {
 			this.health = 0;
 			isKilled = true;
 		}
+		
+		status = "Takes damage " + damage;
 
-		return isKilled;
+		return isKilled;		
 	}
 	
 	public void pickUpWeapon(Weapon weapon) {

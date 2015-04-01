@@ -11,7 +11,9 @@ public abstract class Human {
 	protected int health;
 	protected int damage;
 	protected int experience;
-	protected int level;	
+	protected int level;
+	
+	protected String status = "Ready to fight";
 
 	public int MAX_HEALTH;
 	public int EXPERIENCE_FOR_KILL;
@@ -39,6 +41,7 @@ public abstract class Human {
 	public void messageDamage(String dagame_from, String damage_to, int damage) {
 //		System.out.println(dagame_from + " causes damage "
 //				+ damage_to + ", hit " + damage + " health" + "\n");
+		status = "Hit " + damage + " health";
 	}
 
 	public void messageKill(String dagame_from, String damage_to) {
@@ -46,10 +49,12 @@ public abstract class Human {
 //		System.out
 //				.println(dagame_from + " kill " + damage_to + "\n");
 //		System.out.print(ansi().reset());
+		status = "Kill " + damage_to;
 	}
 	
 	public void printHealthBar() {
 		System.out.printf("%3d/%3d [", health, MAX_HEALTH);
+		if (health == 0) status = "@|red Killed x_x|@";
 		for (int i = 0; i <= 5; i++) {
 			if ( (health != 0) && ((double) health / (double) MAX_HEALTH) >= ((double) i / 5.0) ) {
 				System.out.print(ansi().bg(Color.RED));
@@ -63,6 +68,7 @@ public abstract class Human {
 	}
 	
 	public void heal() {
+		status = "Healed and ready to fight";
 		health = MAX_HEALTH;
 	}
 

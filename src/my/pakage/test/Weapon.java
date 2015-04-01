@@ -23,7 +23,7 @@ public class Weapon {
 	
 	
 	public int use() {
-		int x = rnd.nextInt(101);
+		int x = 1 + rnd.nextInt(100);
 		
 		int curDamage = minDamage + rnd.nextInt(maxDamage - minDamage + 1);
 		

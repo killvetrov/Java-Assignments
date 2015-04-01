@@ -56,6 +56,8 @@ public class Enemy extends Human {
 			this.health = 0;
 			isKilled = true;
 		}
+		
+		status = "Takes " + damage + " damage";
 
 		return isKilled;
 	}	
