@@ -1,0 +1,18 @@
+Ёлементы коллекции
+
+ќдносв€зный список
+| -> | -> | -> -> null		- ArrayList
+
+ƒвусв€зный список
+null <- | <-> | <-> | <-> | <-> | -> null		- LinkedList
+
+HashSet -> наследник LinkedHashSet
+≈ще есть TreeSet
+
+HashMap<V, L> / LinkedHashMap
+
+Vector ~ ArrayList
+
+Stack ~ ArrayList
+
+ƒл€ наших целей в јндроиде используем HashMap и ArrayList
