@@ -105,8 +105,9 @@ public class Tournament extends Thread {
 	
 	public void drawTable() {
 		
-		final char[] tableChars = { '│' , '┤', '┐', '└', '┴', '┬', '├', '─', '┼', '┘', '┌'};				
-			
+		//final char[] tableChars = { '│' , '┤', '┐', '└', '┴', '┬', '├', '─', '┼', '┘', '┌'};				
+		final char[] tableChars = { '*' , '*', '*', '*', '*', '*', '*', '*', '*', '*', '*'};
+		
 		char[][] output = new char[ bracket[currentRound].length * 3 / 2 + 3 ][79];
 		
 		System.out.printf("%n%n");
