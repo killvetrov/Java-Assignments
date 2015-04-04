@@ -64,11 +64,13 @@ public class Player extends Human {
 
 	
 	public void messagePickUpWeapon() {
-		//System.out.println("Player " + this.name + " picked up a weapon " + weap.getName());
+		if (messagesOn)
+			System.out.println("Player " + this.name + " picked up a weapon " + weap.getName());
 	}
 	
 	public void messageDropWeapon() {
-		System.out.println("Player " + this.name + " dropped a weapon.");
+		if (messagesOn)
+			System.out.println("Player " + this.name + " dropped a weapon.");
 	}
 	
 

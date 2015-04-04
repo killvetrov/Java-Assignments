@@ -34,7 +34,7 @@ public class Weapon {
 	
 	public String getName() {
 		
-		return ansi().fg(Color.CYAN) + this.name + ansi().reset() + " (damage: " + minDamage + "-" + maxDamage + ")";
+		return this.name + " (damage: " + minDamage + "-" + maxDamage + ")";
 	}
 	
 	

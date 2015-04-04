@@ -105,8 +105,8 @@ public class Tournament extends Thread {
 	
 	public void drawTable() {
 		
-		//final char[] tableChars = { '│' , '┤', '┐', '└', '┴', '┬', '├', '─', '┼', '┘', '┌'};				
-		final char[] tableChars = { '*' , '*', '*', '*', '*', '*', '*', '*', '*', '*', '*'};
+		final char[] tableChars = { '│' , '┤', '┐', '└', '┴', '┬', '├', '─', '┼', '┘', '┌'};				
+//		final char[] tableChars = { '*' , '*', '*', '*', '*', '*', '*', '*', '*', '*', '*'};
 		
 		char[][] output = new char[ bracket[currentRound].length * 3 / 2 + 3 ][79];
 		
@@ -254,9 +254,10 @@ public class Tournament extends Thread {
 	
 	public static void main(String[] args) {
 		
-		AnsiConsole.systemInstall();
+		//AnsiConsole.systemInstall();
 		System.out.print(ansi().eraseScreen().cursor(1, 1));
 		
+		Human.messagesOn = false;
 		Human[] mobs = new Human[8];
 		
 		mobs[0] = new NormalPlayer("Malvina", 5, 1, 10, 100);
@@ -303,7 +304,7 @@ class Duel extends Thread {
 		this.turn = Tournament.rnd.nextBoolean();
 	}
 	
-	public void run() {		
+	public void run() {
 		do {
 			if (turn) {
 				p1.atack(p2);

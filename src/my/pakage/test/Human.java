@@ -5,6 +5,8 @@ import static org.fusesource.jansi.Ansi.*;
 import org.fusesource.jansi.AnsiConsole;
 
 public abstract class Human {
+	
+	public static boolean messagesOn = true;
 
 	protected String name;
 
@@ -39,16 +41,15 @@ public abstract class Human {
 	}
 
 	public void messageDamage(String dagame_from, String damage_to, int damage) {
-//		System.out.println(dagame_from + " causes damage "
-//				+ damage_to + ", hit " + damage + " health" + "\n");
+		if (messagesOn)
+			System.out.println(dagame_from + " causes damage "
+					+ damage_to + ", hit " + damage + " health" + "\n");
 		status = "Hit " + damage + " health";
 	}
 
 	public void messageKill(String dagame_from, String damage_to) {
-//		System.out.print(ansi().bg(Color.RED));
-//		System.out
-//				.println(dagame_from + " kill " + damage_to + "\n");
-//		System.out.print(ansi().reset());
+		if (messagesOn)
+			System.out.println(dagame_from + " kill " + damage_to + "\n");
 		status = "Kill " + damage_to;
 	}
 	
@@ -70,6 +71,11 @@ public abstract class Human {
 	public void heal() {
 		status = "Healed and ready to fight";
 		health = MAX_HEALTH;
+	}
+	
+	@Override
+	public String toString() {
+		return name;
 	}
 
 }
