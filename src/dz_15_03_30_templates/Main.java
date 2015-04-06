@@ -13,8 +13,6 @@ public class Main {
 		MyCollection<Human> myc4 = new MyCollection<Human>();
 		
 		
-		//myc4.addCollection(myc1);
-		
 		Human[] mobs = new Human[8];
 		
 		mobs[0] = new NormalPlayer("Malvina", 5, 1, 10, 100);
