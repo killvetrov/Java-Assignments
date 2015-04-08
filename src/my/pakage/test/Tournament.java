@@ -74,7 +74,7 @@ public class Tournament extends Thread {
 		System.out.println();
 	}
 	
-	public void fillBracketTable() {
+	public synchronized void fillBracketTable() {
 		System.out.print(ansi().cursor(5, 3));
 		for (int i = 0; i < bracket[currentRound].length; i++) {			
 			if ( (i % 2 == 0) )
@@ -87,9 +87,10 @@ public class Tournament extends Thread {
 			System.out.print(ansi().cursorUp(1));
 			System.out.print(ansi().cursorRight(tableMap[0] + 3));
 			bracket[currentRound][i].printHealthBar();
-			System.out.print(ansi().cursorRight(3).saveCursorPosition());
+			System.out.print(ansi().cursorRight(3));
+			System.out.print(ansi().saveCursorPosition());
 			System.out.print("                                   ");
-			System.out.print(ansi().restorCursorPosition());
+			System.out.print(ansi().restorCursorPosition());			
 			System.out.print(ansi().render(bracket[currentRound][i].status));
 //			if (!bracket[round][i].isKilled())
 //				bracket[round][i].printHealthBar();
@@ -238,10 +239,10 @@ public class Tournament extends Thread {
 					e.printStackTrace();
 				}
 				
-				System.out.print(ansi().bg(Color.BLACK).cursor(1, 1));
-				for (int i = 0; i < 23; i++)
-					System.out.println("                                                                               ");
-				System.out.print(ansi().reset().cursor(1, 1));
+				//System.out.print(ansi().bg(Color.BLACK).cursor(1, 1));
+//				for (int i = 0; i < 23; i++)
+//					System.out.println("                                                                               ");
+				System.out.print(ansi().reset().eraseScreen().cursor(1, 1));
 
 			}			
 		
@@ -258,7 +259,7 @@ public class Tournament extends Thread {
 		System.out.print(ansi().eraseScreen().cursor(1, 1));
 		
 		Human.messagesOn = false;
-		Human[] mobs = new Human[8];
+		Human[] mobs = new Human[32];
 		
 		mobs[0] = new NormalPlayer("Malvina", 5, 1, 10, 100);
 		mobs[1] = new NormalPlayer("Piero", 5, 1, 10, 100);
@@ -270,6 +271,34 @@ public class Tournament extends Thread {
 		mobs[5] = new MediumEnemy("Basilio", 12, 1, 10, 100);
 		mobs[6] = new HardEnemy("Karabas Barabas", 20, 1, 10, 100);
 		mobs[7] = new HardEnemy("Duremar", 20, 1, 10, 100);
+		
+		mobs[8] = new NormalPlayer("Malvina2", 5, 1, 10, 100);
+		mobs[9] = new NormalPlayer("Piero2", 5, 1, 10, 100);
+		mobs[10] = new DonatePlayer("Artemon2", 15, 1, 10, 100);
+		mobs[11] = new DonatePlayer("Buratino2", 15, 1, 10, 100);
+		mobs[12] = new MediumEnemy("Alisa2", 12, 1, 10, 100);
+		mobs[13] = new MediumEnemy("Basilio2", 12, 1, 10, 100);
+		mobs[14] = new HardEnemy("Karabas Barabas2", 20, 1, 10, 100);
+		mobs[15] = new HardEnemy("Duremar2", 20, 1, 10, 100);
+		
+		mobs[16] = new NormalPlayer("Malvina3", 5, 1, 10, 100);
+		mobs[17] = new NormalPlayer("Piero3", 5, 1, 10, 100);
+		mobs[18] = new DonatePlayer("Artemon3", 15, 1, 10, 100);
+		mobs[19] = new DonatePlayer("Buratino3", 15, 1, 10, 100);
+		mobs[20] = new MediumEnemy("Alisa3", 12, 1, 10, 100);
+		mobs[21] = new MediumEnemy("Basilio3", 12, 1, 10, 100);
+		mobs[22] = new HardEnemy("Karabas Barabas3", 20, 1, 10, 100);
+		mobs[23] = new HardEnemy("Duremar3", 20, 1, 10, 100);
+		
+		mobs[24] = new NormalPlayer("Malvina4", 5, 1, 10, 100);
+		mobs[25] = new NormalPlayer("Piero4", 5, 1, 10, 100);
+		mobs[26] = new DonatePlayer("Artemon4", 15, 1, 10, 100);
+		mobs[27] = new DonatePlayer("Buratino4", 15, 1, 10, 100);
+		mobs[28] = new MediumEnemy("Alisa4", 12, 1, 10, 100);
+		mobs[29] = new MediumEnemy("Basilio4", 12, 1, 10, 100);
+		mobs[30] = new HardEnemy("Karabas Barabas4", 20, 1, 10, 100);
+		mobs[31] = new HardEnemy("Duremar4", 20, 1, 10, 100);
+		
 
 		Tournament myTournament = new Tournament(mobs);		
 		
