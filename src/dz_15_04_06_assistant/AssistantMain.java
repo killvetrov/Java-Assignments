@@ -6,15 +6,37 @@ public class AssistantMain implements AssistantListener {
 	
 	static final String CSI = "\u001B[";
 	static Random rnd = new Random();
-	static Assistant myAssistant = new Assistant(new AssistantMain());
+	public static InputContainer myInput = new InputContainer();
+	static AssistantAI myAssistant = new AssistantAI();
 	
-	public static void main(String[] args) {		
+	//StringBui
+	
+	public static void main(String[] args) throws Exception {		
 		
 		//System.out.print(CSI + "2J");
+
+		myInput.input = "Provokator";
+		//myAssistant.start();
+				
+		synchronized (myInput) {
+			myInput.wait();
+		}
 		
+		myInput.input = "Hello there!";
+		synchronized (myInput) {
+			//myInput.wait();
+			
+			myInput.notify();
+		}
 		
+		//myInput.wait();
 		
-		myAssistant.start();	
+		Thread.sleep(4000);
+		
+		synchronized (myInput) {
+			myInput.input = "exit";
+			myInput.notify();
+		}
 		
 	}
 
@@ -24,19 +46,25 @@ public class AssistantMain implements AssistantListener {
 	}
 
 	@Override
-	public synchronized void onAssistantQuestion(String question) {
-		System.out.println(question);
-		try {
-			Thread.sleep(4000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		
-		myAssistant.answer = "exit";
-		myAssistant.answer.notify();	
+	public void onAssistantQuestion(String question) {
+//		System.out.println(question);
+//		try {
+//			Thread.sleep(4000);
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		}
+//		
+//		
+//		myAssistant.answer = "exit";
+//		synchronized (myAssistant.answer) {
+//			
+//		myAssistant.answer.notify();
+//		}
 		
 	}
 	
-	
+	static class InputContainer {
+		public String input;
+	}
 
 }
