@@ -21,8 +21,12 @@ public abstract class Chatter implements ChatEventsListener, Runnable {
 	protected State _state;
 	
 	public Chatter() {
+//		instanceCounter.put(this.getClass().getSimpleName(), 
+//							instanceCounter.getOrDefault(this.getClass().getSimpleName(), 0) + 1);
+		
+		Integer val = instanceCounter.get(this.getClass().getSimpleName());
 		instanceCounter.put(this.getClass().getSimpleName(), 
-							instanceCounter.getOrDefault(this.getClass().getSimpleName(), 0) + 1);		
+				val != null ? val + 1 : 1);
 		this.name = this.getClass().getSimpleName() + instanceCounter.get(this.getClass().getSimpleName());
 		
 		_state = State.NEW;

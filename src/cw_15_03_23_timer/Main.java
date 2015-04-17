@@ -29,7 +29,8 @@ public class Main implements OnTimerTickListener {
 
 		// myTimer.setCount(6);
 		myTimer2.setCount(Timer.TIMER_INFINITE);
-		myTimer2.start();
+		myTimer2.start();		
+		
 		//
 		// myTimer.start();
 		// myTimer2.start();

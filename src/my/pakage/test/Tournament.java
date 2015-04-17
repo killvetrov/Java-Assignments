@@ -151,6 +151,7 @@ public class Tournament extends Thread {
 			System.out.print(ansi().render("> @|bold FINAL ROUND|@"));
 		else
 			System.out.print(ansi().render("> @|bold ROUND %s|@ of %s", currentRound + 1, finalRound));
+		
 		System.out.print(ansi().cursor(4, 2));
 		System.out.print(ansi().fg(Color.DEFAULT).bold());
 		System.out.print("       Player       ");
@@ -255,8 +256,9 @@ public class Tournament extends Thread {
 	
 	public static void main(String[] args) {
 		
-		//AnsiConsole.systemInstall();
+		AnsiConsole.systemInstall();
 		System.out.print(ansi().eraseScreen().cursor(1, 1));
+		System.out.println('\u25A0');
 		
 		Human.messagesOn = false;
 		Human[] mobs = new Human[32];
