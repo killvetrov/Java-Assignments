@@ -36,7 +36,7 @@ public abstract class Chatter implements ChatEventsListener, Runnable {
 		return name;
 	};
 	
-	public void setName(String name) {
+	public void setName(String name) {		
 		this.name = name;
 	}
 	
@@ -44,7 +44,6 @@ public abstract class Chatter implements ChatEventsListener, Runnable {
 	
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
 		
 	}
 

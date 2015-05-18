@@ -5,7 +5,7 @@ public class LocalUser extends Chatter {
 	@Override
 	public void onEnterChat(Chat chatToEnter) {
 		// TODO Auto-generated method stub
-		chatToEnter.sendMessage(this, "Всем привет!");
+		//chatToEnter.sendMessage(this, "Всем привет!");
 	}
 
 	@Override

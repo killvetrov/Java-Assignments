@@ -46,12 +46,12 @@ public class Chat extends Thread {
 	public synchronized void join(Chatter joiningChatter) {
 		
 		if (chatters.contains(joiningChatter)) {
-			System.out.println("------- " + joiningChatter.getName() + " пытается подключиться повторно.");
+			printlnToLog("------- " + joiningChatter.getName() + " пытается подключиться повторно.");
 			return;
 		}
 		
 		if (chatters.add(joiningChatter)) {
-			System.out.printf("[ + 1 ] %s вошел в чат в %s. Участников беседы: %s.%n", 
+			printfToLog("%n[ + 1 ] %s вошел в чат в %s. Участников беседы: %s.", 
 					joiningChatter.getName(), _timestamp(), chattersCount());
 			
 			notify();			
@@ -68,11 +68,19 @@ public class Chat extends Thread {
 		}
 	}
 	
+	public void printfToLog(String format, Object... args) {
+		SwingUI.getInstance().appendStringToTextArea(String.format(format, args));
+	}
+	
+	public void printlnToLog(Object printable) {
+		printfToLog("%n%s", printable);
+	}
+		
 	public synchronized void leave(Chatter leavingChatter) {
 		
 		if (chatters.remove(leavingChatter)) {
 			leavingChatter.onLeaveChat(this);
-			System.out.printf("[ - 1 ] %s вышел из чата в %s. Участников беседы: %s.%n", 
+			printfToLog("[ - 1 ] %s вышел из чата в %s. Участников беседы: %s.%n", 
 					leavingChatter.getName(), _timestamp(), chattersCount());			
 			
 			for (Chatter chttr : chatters)
@@ -142,7 +150,7 @@ public class Chat extends Thread {
 	
 	public synchronized void printLog() {
 		for (Message m : log)
-			System.out.println(m);
+			printlnToLog(m);
 	}
 	
 	@Override
@@ -175,7 +183,7 @@ public class Chat extends Thread {
 				case NEW_MESSAGES:					
 					while (!messages.isEmpty()) {
 						Message m = messages.removeFirst();
-						System.out.println(m);
+						printlnToLog(m);
 											
 						Vector<Chatter> chattersToNotify = new Vector<Chatter>();
 						for (Chatter chttr : chatters)							
@@ -190,7 +198,7 @@ public class Chat extends Thread {
 					break;
 				
 				case NEW:
-					System.out.printf("[старт] Чат начался %s в %s.%n",
+					printfToLog("[старт] Чат начался %s в %s.",
 							DateFormat.getDateInstance(DateFormat.LONG).format(System.currentTimeMillis()),
 							DateFormat.getTimeInstance().format(System.currentTimeMillis())
 							);
@@ -212,7 +220,7 @@ public class Chat extends Thread {
 		for (Chatter chttr : chatters)
 			chttr.onLeaveChat(this);
 		
-		System.out.printf("[выход] Чат завершился %s в %s.%n",
+		printfToLog("[выход] Чат завершился %s в %s.%n",
 				DateFormat.getDateInstance(DateFormat.LONG).format(System.currentTimeMillis()),
 				DateFormat.getTimeInstance().format(System.currentTimeMillis())
 				);
@@ -220,12 +228,13 @@ public class Chat extends Thread {
 	}
 	
 	public static void main(String[] args) throws Exception {
-
+		
 		Chat myChat = new Chat();
-
 		LocalUser lu1 = new LocalUser();
+		SwingUI.startChatUI(myChat, lu1);
+		
 		//lu1.setName("1");
-		LocalUser lu2 = new LocalUser();
+		//LocalUser lu2 = new LocalUser();
 		//lu2.setName("2");
 		AssistantAI as1 = new AssistantAI();
 
@@ -236,26 +245,38 @@ public class Chat extends Thread {
 		myChat.start();
 		
 		Thread sleeper = new Thread(asyncSleeper, "Sleeper1");
-		_msToSleep = 2000;
+		_msToSleep = 700;
 		sleeper.start();
 		sleeper.join();
 		myChat.join(lu1);
-		myChat.join(lu2);
-		myChat.join(lu2);
 		
 		sleeper = new Thread(asyncSleeper, "Sleeper1");
-		_msToSleep = 2000;
+		_msToSleep = 700;
 		sleeper.start();
 		sleeper.join();
 		myChat.join(as1);
-		myChat.leave(lu1);
 		
-		sleeper = new Thread(asyncSleeper, "Sleeper2");
-		_msToSleep = 27000;
-		sleeper.start();
-		sleeper.join();
+//		Thread sleeper = new Thread(asyncSleeper, "Sleeper1");
+//		_msToSleep = 2000;
+//		sleeper.start();
+//		sleeper.join();
+//		myChat.join(lu1);
+//		myChat.join(lu2);
+//		myChat.join(lu2);
 		
-		myChat.quit();
+//		sleeper = new Thread(asyncSleeper, "Sleeper1");
+//		_msToSleep = 2000;
+//		sleeper.start();
+//		sleeper.join();
+//		myChat.join(as1);
+//		myChat.leave(lu1);
+		
+//		sleeper = new Thread(asyncSleeper, "Sleeper2");
+//		_msToSleep = 27000;
+//		sleeper.start();
+//		sleeper.join();
+//		
+//		myChat.quit();
 
 	}
 
