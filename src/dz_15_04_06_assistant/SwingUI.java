@@ -83,6 +83,9 @@ public class SwingUI extends JPanel implements ActionListener {
         	case "/logp":
         		myChat.printLog();
         		break;
+        		
+        	case "/adai":
+        		myChat.join(new AssistantAI());
         	}
         } else {
         	myChat.sendMessage(myLU, text);

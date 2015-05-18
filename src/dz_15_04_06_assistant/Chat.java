@@ -80,7 +80,7 @@ public class Chat extends Thread {
 		
 		if (chatters.remove(leavingChatter)) {
 			leavingChatter.onLeaveChat(this);
-			printfToLog("[ - 1 ] %s вышел из чата в %s. Участников беседы: %s.%n", 
+			printfToLog("%n[ - 1 ] %s вышел из чата в %s. Участников беседы: %s.", 
 					leavingChatter.getName(), _timestamp(), chattersCount());			
 			
 			for (Chatter chttr : chatters)

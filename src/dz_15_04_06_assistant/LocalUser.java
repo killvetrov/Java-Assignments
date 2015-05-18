@@ -10,38 +10,32 @@ public class LocalUser extends Chatter {
 
 	@Override
 	public void onLeaveChat(Chat chatToLeave) {
-		// TODO Auto-generated method stub
+
 		
 	}
 
 	@Override
 	public void onNewMessage(Chat chatToReply, Message message) {
-		// TODO Auto-generated method stub
+
 		
 	}
 
 	@Override
 	public String nextReplica(Chat chatToTalk) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public void onNewChatter(Chat chatWithNewChatter, Chatter newChatter) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void onChatterLeft(Chat chatMinusOneChatter, Chatter chatterWhoLeft) {
-		// TODO Auto-generated method stub
-		synchronized (chatMinusOneChatter) {		
+	public void onChatterLeft(Chat chatMinusOneChatter, Chatter chatterWhoLeft) {		
 
-			if (chatMinusOneChatter.chattersCount() < 2) {
-				chatMinusOneChatter.sendMessage(this, "Я в чате один :/");
-				//chatMinusOneChatter.leave(this);
-			}	
-		}
+//			if (chatMinusOneChatter.chattersCount() < 2) {
+//				chatMinusOneChatter.sendMessage(this, "Я в чате один :/");
+//			}	
 		
 	}	
 

@@ -17,6 +17,9 @@ public class AssistantAI extends Chatter {
 	private HashMap<String, ArrayList<String>> conversationMap = 
 			new HashMap<String, ArrayList<String>>();
 	
+	private boolean bored = false;
+	private boolean greeted = false;
+	
 	Chat myChat;
 	
 	Message curMsg;
@@ -70,6 +73,8 @@ public class AssistantAI extends Chatter {
 	private String getConversationLine(String msg) {
 		ArrayList<StringBuffer> words = new ArrayList<StringBuffer>();
 		
+		msg = msg.trim().toLowerCase();
+		
 		int spos = 0;
 		boolean nextWord = false;
 		StringBuffer strbuf = new StringBuffer();
@@ -100,21 +105,59 @@ public class AssistantAI extends Chatter {
 		String detectedKey = "default";
 		boolean keyFound = false;
 		for ( String key : conversationMap.keySet() ) {
-			for ( StringBuffer word : words) {
-				if (word.length() == 0) continue;
-				if (conversationMap.get(key).contains(word.toString())) {
+			if (key.indexOf('>') != -1) continue;
+			for ( String convoLine : conversationMap.get(key) ) {
+				if ( msg.equals(convoLine.toLowerCase()) ) {
 					detectedKey = key;
 					keyFound = true;
 					break;
+				}				
+			}
+			if (keyFound) break;
+		}
+		
+		if (!keyFound) {
+			for ( String key : conversationMap.keySet() ) {
+				if (key.indexOf('>') != -1) continue;
+				for ( String convoLine : conversationMap.get(key) ) {
+					for ( StringBuffer word : words) {
+						if (word.length() == 0) continue;
+						if (convoLine.indexOf(word.toString().toLowerCase()) != -1) {
+							detectedKey = key;
+							keyFound = true;
+							break;
+						}
+					}
+					if (keyFound) break;
 				}
-			}	
-			if (keyFound) break;		
+				if (keyFound) break;		
+			}
 		}
 		
 		return conversationMap.get(detectedKey).get(rnd.nextInt(conversationMap.get(detectedKey).size()));
 		
 	}
-
+	
+	private String getRndLineFromCategory(String category) {
+		if (!conversationMap.containsKey(category))
+			category = "default";
+		return conversationMap.get(category).get(rnd.nextInt(conversationMap.get(category).size()));
+	}
+	
+	private boolean isLineFromCategory(String line, String category) {
+		boolean lineFound = false;
+		
+		line = line.trim().toLowerCase();
+		
+		for ( String convoLine : conversationMap.get(category) ) {
+			if ( line.equals(convoLine.toLowerCase()) ) {
+				lineFound = true;
+				break;
+			}				
+		}			
+		
+		return lineFound;
+	}
 	
 	private synchronized void updateState() {
 		if (_state == State.LEAVE_CHAT) {
@@ -142,22 +185,43 @@ public class AssistantAI extends Chatter {
 					break;
 				case IDLE:					
 					try {
-						wait(15000);
-						if (_state == State.IDLE)
-						myChat.sendMessage(this, "хрен вас дождешься!");
+						wait(25000);
+						if (_state == State.IDLE) {
+							bored = true;
+							myChat.sendMessage(this, getRndLineFromCategory("скучно"));
+						}	
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
 					break;
-				case LEAVE_CHAT:
-					break;
+
 				case NEW:
 					_state = State.IDLE;
 					break;
 				case NEW_CHATTER:
 					break;
 				case NEW_MESSAGE:
-					myChat.sendMessage(this, getConversationLine(curMsg.getText()));					
+					if (isLineFromCategory(curMsg.getText(), "приветствие-")) {
+						if (greeted) {
+							myChat.sendMessage(this, getRndLineFromCategory("приветствие>"));
+							_state = State.IDLE;
+							break;
+						} else
+							greeted = true;	
+					}
+					
+					if (isLineFromCategory(curMsg.getText(), "прощание-")) {
+						//_state = State.LEAVE_CHAT;
+						myChat.sendMessage(this, getRndLineFromCategory("прощание-"));
+						myChat.leave(this);
+						break;
+					}
+					
+					if (bored) {
+						bored = false;
+						myChat.sendMessage(this, getRndLineFromCategory("скучно>"));
+					} else
+						myChat.sendMessage(this, getConversationLine(curMsg.getText()));					
 					
 					_state = State.IDLE;
 					break;
